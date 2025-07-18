@@ -125,7 +125,7 @@ private:
     void RestoreNpcs()
     {
         // 1. 백업 테이블의 정보를 사용하여 creature 테이블의 spawnMask를 원본으로 복원
-        std::string restoreQuery = "UPDATE creature c JOIN mod_visible_npc_backup b ON c.id = b.entry SET c.spawnMask = b.original_spawnmask;";
+        std::string restoreQuery = "UPDATE creature c JOIN mod_visible_npc_backup b ON c.id1 = b.entry SET c.spawnMask = b.original_spawnmask;";
         WorldDatabase.Execute(restoreQuery);
         LOG_INFO("mod.visible_npc", "mod-visible-npc: NPC 복원 쿼리 실행 요청 완료.");
 

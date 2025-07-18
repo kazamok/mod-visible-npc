@@ -52,9 +52,8 @@ VisibleNPC.HiddenEntries.QuelDanas_Dawnblade = 24979,25087,24978,25063,24976
 # --- 쿠엘다나스 섬: 기타 ---
 VisibleNPC.HiddenEntries.QuelDanas_Misc = 37542,37552,37205,25174,25169
 
-# --- 샤트라스 (예시) ---
-# 이 그룹은 현재 주석 처리되어 비활성화된 상태입니다.
-# VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
+# --- 샤트라스 ---
+VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
 ```
 
 ## 🔄 설정 리로드

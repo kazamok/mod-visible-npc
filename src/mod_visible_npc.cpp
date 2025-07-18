@@ -19,7 +19,7 @@ public:
         return &instance;
     }
 
-    // 설정 파일(worldserver.conf)에서 설정을 로드하고 DB 작업을 수행합니다.
+    // 설정 파일(mod_visible_npc.conf.dist)에서 설정을 로드하고 DB 작업을 수행합니다.
     void Load()
     {
         // "VisibleNPC.Enable" 값을 읽어 모듈 활성화 여부를 결정합니다.

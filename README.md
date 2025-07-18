@@ -5,7 +5,7 @@
 ## 🔧 주요 기능
 
 - NPC Entry ID를 기반으로 특정 NPC를 숨기거나 표시할 수 있습니다.
-- `worldserver.conf` 또는 별도의 `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
+- `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
 - **동적 로딩:** NPC 목록을 논리적인 그룹으로 나누어 관리할 수 있으며, `VisibleNPC.HiddenEntries.` 로 시작하는 모든 설정은 자동으로 로드됩니다.
 - 설정 스위치 하나로 모듈 전체를 켜고 끌 수 있습니다.
 - **NPC 스폰 제어:** 서버 시작 시 데이터베이스의 `spawnMask` 값을 직접 수정하여 NPC의 스폰을 영구적으로 제어합니다.
@@ -14,7 +14,7 @@
 ## 📁 파일 구성
 
 - `src/mod_visible_npc.cpp` – 모듈의 핵심 로직이 담긴 C++ 소스 파일입니다.
-- `conf/mod_visible_npc.conf.dist` – 설정 예시 파일입니다.
+- `conf/mod_visible_npc.conf.dist` – 설정 파일입니다.
 - `CMakeLists.txt` – 모듈 빌드 설정 파일입니다.
 
 ## ⚙️ 설정 방법
@@ -76,7 +76,7 @@ VisibleNPC.HiddenEntries.QuelDanas_Dawnblade = 24979,25087,24978,25063,24976
 # --- 쿠엘다나스 섬: 기타 ---
 VisibleNPC.HiddenEntries.QuelDanas_Misc = 37542,37552,37205,25174,25169
 
-# --- 샤트라스 (예시) ---
+# --- 샤트라스 : 무너진 태양 공격대 ---
 # 이 그룹은 현재 주석 처리되어 비활성화된 상태입니다.
 # VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
 ```

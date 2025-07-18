@@ -31,7 +31,7 @@ public:
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_ShatteredSun", hiddenEntriesFromConfig);
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_Dawnblade", hiddenEntriesFromConfig);
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_Misc", hiddenEntriesFromConfig);
-        LoadEntriesFromConfig("VisibleNPC.HiddenEntries.Shattrath", hiddenEntriesFromConfig); // 예시용 샤트라스 그룹
+        LoadEntriesFromConfig("VisibleNPC.HiddenEntries.Shattrath", hiddenEntriesFromConfig);
 
         // 숨길 NPC ID 목록이 비어있으면 아무 작업도 하지 않습니다.
         if (hiddenEntriesFromConfig.empty())

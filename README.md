@@ -5,22 +5,45 @@
 ## 🔧 주요 기능
 
 - NPC Entry ID를 기반으로 특정 NPC를 숨기거나 표시할 수 있습니다.
-- `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
+- `worldserver.conf` 또는 별도의 `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
 - **동적 로딩:** NPC 목록을 논리적인 그룹으로 나누어 관리할 수 있으며, `VisibleNPC.HiddenEntries.` 로 시작하는 모든 설정은 자동으로 로드됩니다.
 - 설정 스위치 하나로 모듈 전체를 켜고 끌 수 있습니다.
-- 불타는 성정 태양샘 고원 함락 이벤트를 끄도록 옵션을 추가하고 별도의 NPC들의 가시성을 조절할 때 사용합니다.
+- **NPC 스폰 제어:** 서버 시작 시 데이터베이스의 `spawnMask` 값을 직접 수정하여 NPC의 스폰을 영구적으로 제어합니다.
+- **안전한 복원:** 모듈 비활성화 시, 숨겨졌던 NPC들의 `spawnMask` 값을 원래대로 복원합니다.
 
 ## 📁 파일 구성
 
 - `src/mod_visible_npc.cpp` – 모듈의 핵심 로직이 담긴 C++ 소스 파일입니다.
-- `conf/mod_visible_npc.conf.dist` – 설정 파일입니다.
+- `conf/mod_visible_npc.conf.dist` – 설정 예시 파일입니다.
 - `CMakeLists.txt` – 모듈 빌드 설정 파일입니다.
 
 ## ⚙️ 설정 방법
 
-모듈을 설정하려면, `mod_visible_npc.conf` 라는 파일에 아래 내용을 작성하십시오.
+모듈을 사용하기 전에 다음 단계를 따라야 합니다.
 
-**1. 모듈 활성화:**
+**1. 데이터베이스 테이블 생성 (필수):**
+
+이 모듈은 NPC의 원래 스폰 정보를 백업하고 복원하기 위해 `acore_world` 데이터베이스에 `mod_visible_npc_backup`이라는 보조 테이블을 사용합니다. 모듈을 사용하기 전에 반드시 이 테이블을 생성해야 합니다.
+
+**실행 이유:**
+NPC를 숨기기 위해 `creature` 테이블의 `spawnMask` 값을 변경합니다. 모듈을 비활성화했을 때 NPC를 원래대로 복원하려면, 변경하기 전의 `spawnMask` 값을 알아야 합니다. 이 테이블이 그 원본 값을 안전하게 저장하는 역할을 합니다.
+
+**실행 방법:**
+MySQL 클라이언트(예: HeidiSQL, DBeaver, MySQL Workbench)를 사용하여 `acore_world` 데이터베이스에 연결한 후 다음 SQL 쿼리를 실행하십시오. 이 쿼리는 테이블이 이미 존재하더라도 오류 없이 실행되므로, 여러 번 실행해도 안전합니다.
+
+```sql
+USE acore_world;
+
+CREATE TABLE IF NOT EXISTS `mod_visible_npc_backup` (
+  `entry` INT UNSIGNED NOT NULL,
+  `original_spawnmask` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`entry`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
+**2. 모듈 활성화:**
+
+`worldserver.conf` 파일에 직접 내용을 추가하거나, 더 나은 관리를 위해 `mod_visible_npc.conf` 라는 별도의 파일을 만들어 아래 내용을 작성하십시오.
 
 `VisibleNPC.Enable` 값을 `1`로 설정하면 모듈이 활성화되고, `0`으로 설정하면 비활성화됩니다.
 
@@ -30,7 +53,7 @@
 VisibleNPC.Enable = 1
 ```
 
-**2. NPC 목록 설정:**
+**3. NPC 목록 설정:**
 
 숨기고 싶은 NPC의 Entry ID를 목록에 추가하여 관리할 수 있습니다. 각 목록의 설정 키는 반드시 `VisibleNPC.HiddenEntries.` 로 시작해야 합니다.
 
@@ -53,8 +76,9 @@ VisibleNPC.HiddenEntries.QuelDanas_Dawnblade = 24979,25087,24978,25063,24976
 # --- 쿠엘다나스 섬: 기타 ---
 VisibleNPC.HiddenEntries.QuelDanas_Misc = 37542,37552,37205,25174,25169
 
-# --- 샤트라스 ---
-VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
+# --- 샤트라스 (예시) ---
+# 이 그룹은 현재 주석 처리되어 비활성화된 상태입니다.
+# VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
 ```
 
 ## 🔄 설정 리로드

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `mod_visible_npc_backup` (
 
 **2. 모듈 활성화:**
 
-`worldserver.conf` 파일에 직접 내용을 추가하거나, 더 나은 관리를 위해 `mod_visible_npc.conf` 라는 별도의 파일을 만들어 아래 내용을 작성하십시오.
+`mod_visible_npc.conf` 라는 별도의 파일을 만들어 아래 내용을 작성하십시오.
 
 `VisibleNPC.Enable` 값을 `1`로 설정하면 모듈이 활성화되고, `0`으로 설정하면 비활성화됩니다.
 
@@ -76,9 +76,8 @@ VisibleNPC.HiddenEntries.QuelDanas_Dawnblade = 24979,25087,24978,25063,24976
 # --- 쿠엘다나스 섬: 기타 ---
 VisibleNPC.HiddenEntries.QuelDanas_Misc = 37542,37552,37205,25174,25169
 
-# --- 샤트라스 : 무너진 태양 공격대 ---
-# 이 그룹은 현재 주석 처리되어 비활성화된 상태입니다.
-# VisibleNPC.HiddenEntries.Shattrath = 12345, 67890
+# --- 샤트라스: 무너진 태양 공격대 ---
+VisibleNPC.HiddenEntries.Shattrath = 12345, 67890 .....
 ```
 
 ## 🔄 설정 리로드

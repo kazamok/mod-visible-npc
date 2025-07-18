@@ -19,7 +19,7 @@ public:
         return &instance;
     }
 
-    // 설정 파일(mod_visible_npc.conf.dist)에서 설정을 로드하고 DB 작업을 수행합니다.
+    // 설정 파일(worldserver.conf)에서 설정을 로드하고 DB 작업을 수행합니다.
     void Load()
     {
         // "VisibleNPC.Enable" 값을 읽어 모듈 활성화 여부를 결정합니다.
@@ -31,7 +31,7 @@ public:
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_ShatteredSun", hiddenEntriesFromConfig);
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_Dawnblade", hiddenEntriesFromConfig);
         LoadEntriesFromConfig("VisibleNPC.HiddenEntries.QuelDanas_Misc", hiddenEntriesFromConfig);
-        LoadEntriesFromConfig("VisibleNPC.HiddenEntries.Shattrath", hiddenEntriesFromConfig);
+        LoadEntriesFromConfig("VisibleNPC.HiddenEntries.Shattrath", hiddenEntriesFromConfig); // 예시용 샤트라스 그룹
 
         // 숨길 NPC ID 목록이 비어있으면 아무 작업도 하지 않습니다.
         if (hiddenEntriesFromConfig.empty())
@@ -63,12 +63,12 @@ public:
             // 1. 백업 테이블에 원본 spawnMask 백업
             // creature 테이블에서 숨길 NPC들의 현재 spawnMask를 조회하여 백업 테이블에 삽입
             // 이미 백업된 NPC는 무시 (PRIMARY KEY 충돌 방지)
-            std::string backupQuery = "INSERT IGNORE INTO mod_visible_npc_backup (entry, original_spawnmask) SELECT id, spawnMask FROM creature WHERE id IN (" + hiddenIdsStr + ");";
+            std::string backupQuery = "INSERT IGNORE INTO mod_visible_npc_backup (entry, original_spawnmask) SELECT id1, spawnMask FROM creature WHERE id1 IN (" + hiddenIdsStr + ");";
             WorldDatabase.Execute(backupQuery);
             LOG_INFO("mod.visible_npc", "mod-visible-npc: NPC spawnMask 백업 쿼리 실행 요청 완료.");
 
             // 2. creature 테이블의 spawnMask를 0으로 업데이트하여 숨김
-            std::string hideQuery = "UPDATE creature SET spawnMask = 0 WHERE id IN (" + hiddenIdsStr + ");";
+            std::string hideQuery = "UPDATE creature SET spawnMask = 0 WHERE id1 IN (" + hiddenIdsStr + ");";
             WorldDatabase.Execute(hideQuery);
             LOG_INFO("mod.visible_npc", "mod-visible-npc: NPC 숨김 쿼리 실행 요청 완료.");
         }
@@ -135,14 +135,6 @@ private:
         LOG_INFO("mod.visible_npc", "mod-visible-npc: 백업 테이블 비우기 쿼리 실행 요청 완료.");
     }
 };
-
-// OnCreatureAddWorld 스크립트는 더 이상 필요 없으므로 제거합니다.
-// class mod_visible_npc_AllCreatureScript : public AllCreatureScript
-// {
-// public:
-//     mod_visible_npc_AllCreatureScript() : AllCreatureScript("mod_visible_npc_AllCreatureScript") {} 
-//     void OnCreatureAddWorld(Creature* creature) override { /* 로직 제거 */ }
-// };
 
 // 월드 서버의 상태 변화에 따라 동작하는 스크립트
 class mod_visible_npc_WorldScript : public WorldScript

@@ -5,19 +5,20 @@
 ## 🔧 주요 기능
 
 - NPC Entry ID를 기반으로 특정 NPC를 숨기거나 표시할 수 있습니다.
-- `worldserver.conf` 또는 별도의 `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
+- `mod_visible_npc.conf` 파일을 통해 설정을 관리합니다.
 - **동적 로딩:** NPC 목록을 논리적인 그룹으로 나누어 관리할 수 있으며, `VisibleNPC.HiddenEntries.` 로 시작하는 모든 설정은 자동으로 로드됩니다.
 - 설정 스위치 하나로 모듈 전체를 켜고 끌 수 있습니다.
+- 불타는 성정 태양샘 고원 함락 이벤트를 끄도록 옵션을 추가하고 별도의 NPC들의 가시성을 조절할 때 사용합니다.
 
 ## 📁 파일 구성
 
 - `src/mod_visible_npc.cpp` – 모듈의 핵심 로직이 담긴 C++ 소스 파일입니다.
-- `conf/mod_visible_npc.conf.dist` – 설정 예시 파일입니다.
+- `conf/mod_visible_npc.conf.dist` – 설정 파일입니다.
 - `CMakeLists.txt` – 모듈 빌드 설정 파일입니다.
 
 ## ⚙️ 설정 방법
 
-모듈을 설정하려면, `worldserver.conf` 파일에 직접 내용을 추가하거나, 더 나은 관리를 위해 `mod_visible_npc.conf` 라는 별도의 파일을 만들어 아래 내용을 작성하십시오.
+모듈을 설정하려면, `mod_visible_npc.conf` 라는 파일에 아래 내용을 작성하십시오.
 
 **1. 모듈 활성화:**
 

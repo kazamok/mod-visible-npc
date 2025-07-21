@@ -1,3 +1,7 @@
+
+/* filename:
+mod-visible-npc.cpp */
+
 #include "ScriptMgr.h"
 #include "Config.h"
 #include "World.h" // sWorld 사용을 위해 포함
